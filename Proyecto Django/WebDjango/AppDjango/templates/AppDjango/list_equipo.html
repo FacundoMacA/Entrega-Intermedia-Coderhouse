@@ -1,0 +1,51 @@
+{% extends "AppDjango/index.html" %}
+
+{% load bootstrap5 %}
+
+{% block cuerpo %}
+<div class="container">    
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregar_equipo' as agregar_url %}
+      {% url 'buscar_equipo' as buscar_url %}
+      {% bootstrap_button "NUEVO" button_class="btn-success" button_type="link" href=agregar_url %} 
+      {% bootstrap_button "BUSCAR" button_class="btn-success" button_type="link" href=buscar_url %}  
+    <div>
+  <div>
+
+  <div class="row">
+    <div class="col">
+        {% if equipos %}
+        <table class="table">
+            <thead>
+                <th scope="col">ID</th>
+                <th scope="col">EQUIPO</th>
+                <th scope="col">PAIS</th>
+                <th scope="col">FUNDACIÓN</th>
+                <th scope="col">ESTADIO</th>
+                <th scope="col">PROVINCIA</th>
+            </thead>
+        
+            {% for e in equipos %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{e.id}} </th>
+                    <td> {{e.nombre}} </td>
+                    <td> {{e.pais}} </td>
+                    <td> {{e.fecha_fundacion}} </td>
+                    <td> {{e.estadio}} </td>
+                    <td> {{e.provincia}} </td>
+                    {% url 'borrar_equipo' identificador=e.id as borrar_url %}
+                    <td>{% bootstrap_button "BORRAR" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
+                </tr>  
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tiene equipos cargados</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

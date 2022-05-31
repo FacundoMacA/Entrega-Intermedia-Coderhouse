@@ -1,0 +1,55 @@
+{% extends "AppDjango/index.html" %}
+
+{% load bootstrap5 %}
+
+{% block cuerpo %}
+<div class="container">    
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregar_jugador' as agregar_url %}
+      {% url 'buscar_jugador' as buscar_url %}
+      {% bootstrap_button "NUEVO" button_class="btn-success" button_type="link" href=agregar_url %} 
+      {% bootstrap_button "BUSCAR" button_class="btn-success" button_type="link" href=buscar_url %}  
+    <div>
+  <div>
+
+  <div class="row">
+    <div class="col">
+        {% if jugadores %}
+        <table class="table">
+            <thead>
+                <th scope="col">ID</th>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">APELLIDO</th>
+                <th scope="col">FECHA DE NACIMIENTO</th>
+                <th scope="col">NACIONALIDAD</th>
+                <th scope="col">EQUIPO</th>
+                <th scope="col">POSICION</th>
+                <th scope="col">VALOR</th>
+            </thead>
+        
+            {% for j in jugadores %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{j.id}} </th>
+                    <td> {{j.nombre}} </td>
+                    <td> {{j.apellido}} </td>
+                    <td> {{j.fecha_nacimiento}} </td>
+                    <td> {{j.nacionalidad}} </td>
+                    <td> {{j.equipo}} </td>
+                    <td> {{j.posicion}} </td>
+                    <td> {{j.valor}} </td>
+                    {% url 'borrar_jugador' identificador=j.id as borrar_url %}
+                    <td>{% bootstrap_button "BORRAR" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
+                </tr>  
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tiene jugadores cargados</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
